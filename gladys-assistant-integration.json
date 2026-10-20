@@ -1,0 +1,1205 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "Infoclimat",
+  "description": {
+    "en": "Infoclimat weather stations (StatIC): temperature, wind, rain, near your houses.",
+    "fr": "Stations météo Infoclimat (StatIC) : température, vent, pluie, près de vos maisons.",
+    "de": "Infoclimat-Wetterstationen (StatIC): Temperatur, Wind, Regen nahe deinen Häusern.",
+    "es": "Estaciones meteorológicas Infoclimat (StatIC): temperatura, viento, lluvia cerca."
+  },
+  "version": "0.1.0",
+  "docker_image": "ghcr.io/william-de71/gladys-infoclimat:0.1.0",
+  "gladys_version": ">=5.2.0",
+  "categories": ["environment"],
+  "cover_image": "https://raw.githubusercontent.com/William-De71/gladys-infoclimat/main/cover.jpg",
+  "transports": ["cloud"],
+  "location": true,
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "Infoclimat open data key",
+        "fr": "Clé open data Infoclimat",
+        "de": "Infoclimat-Open-Data-Schlüssel",
+        "es": "Clave open data de Infoclimat"
+      },
+      "description": {
+        "en": "Infoclimat is a French non-profit association that shares the readings of the weather stations of its members (the StatIC network) and of official stations. Its open data API needs a free personal key: request it on its open data page, then paste it below. The key may be bound to the public IP address it is used from.",
+        "fr": "Infoclimat est une association loi 1901 qui partage les relevés des stations météo de ses membres (le réseau StatIC) et de stations officielles. Son API open data demande une clé personnelle gratuite : demandez-la sur sa page open data, puis collez-la ci-dessous. La clé peut être liée à l’adresse IP publique qui l’utilise.",
+        "de": "Infoclimat ist ein französischer gemeinnütziger Verein, der die Messwerte der Wetterstationen seiner Mitglieder (das StatIC-Netz) und offizieller Stationen teilt. Seine Open-Data-API braucht einen kostenlosen persönlichen Schlüssel: Beantrage ihn auf der Open-Data-Seite und füge ihn unten ein. Der Schlüssel kann an die öffentliche IP-Adresse gebunden sein, von der er genutzt wird.",
+        "es": "Infoclimat es una asociación francesa sin ánimo de lucro que comparte las lecturas de las estaciones meteorológicas de sus miembros (la red StatIC) y de estaciones oficiales. Su API open data necesita una clave personal gratuita: solicítela en su página open data y péguela abajo. La clave puede estar ligada a la dirección IP pública desde la que se usa."
+      },
+      "links": [
+        {
+          "url": "https://www.infoclimat.fr/opendata/",
+          "label": {
+            "en": "Infoclimat open data (the key)",
+            "fr": "Open data Infoclimat (la clé)",
+            "de": "Infoclimat Open Data (der Schlüssel)",
+            "es": "Open data de Infoclimat (la clave)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "api_key",
+      "type": "secret",
+      "required": true,
+      "label": {
+        "en": "Open data key",
+        "fr": "Clé open data",
+        "de": "Open-Data-Schlüssel",
+        "es": "Clave open data"
+      },
+      "placeholder": {
+        "en": "Your personal key",
+        "fr": "Votre clé personnelle",
+        "de": "Dein persönlicher Schlüssel",
+        "es": "Su clave personal"
+      }
+    },
+    {
+      "key": "stations",
+      "type": "section",
+      "label": {
+        "en": "Station 1",
+        "fr": "Station 1",
+        "de": "Station 1",
+        "es": "Estación 1"
+      },
+      "description": {
+        "en": "Up to three stations, each the nearest one of a house of Gladys or a station chosen by its identifier. The identifier is in the address of the page of a station on infoclimat.fr (…/besancon/000P2.html).",
+        "fr": "Jusqu’à trois stations, chacune la plus proche d’une maison de Gladys ou une station choisie par son identifiant. L’identifiant figure dans l’adresse de la page d’une station sur infoclimat.fr (…/besancon/000P2.html).",
+        "de": "Bis zu drei Stationen, jeweils die nächste eines Hauses in Gladys oder eine über ihre Kennung gewählte Station. Die Kennung steht in der Adresse der Seite einer Station auf infoclimat.fr (…/besancon/000P2.html).",
+        "es": "Hasta tres estaciones, cada una la más cercana a una casa de Gladys o una estación elegida por su identificador. El identificador aparece en la dirección de la página de una estación en infoclimat.fr (…/besancon/000P2.html)."
+      },
+      "links": [
+        {
+          "url": "https://www.infoclimat.fr/stations-meteo/",
+          "label": {
+            "en": "Find a station",
+            "fr": "Trouver une station",
+            "de": "Eine Station finden",
+            "es": "Buscar una estación"
+          }
+        }
+      ]
+    },
+    {
+      "key": "house_1",
+      "type": "select",
+      "source": "houses",
+      "label": {
+        "en": "House",
+        "fr": "Maison",
+        "de": "Haus",
+        "es": "Casa"
+      },
+      "description": {
+        "en": "The nearest StatIC station of its location in Gladys that reported in the last 24 hours.",
+        "fr": "La station StatIC la plus proche de sa position dans Gladys ayant émis dans les dernières 24 heures.",
+        "de": "Die nächste StatIC-Station seines Standorts in Gladys, die in den letzten 24 Stunden gemeldet hat.",
+        "es": "La estación StatIC más cercana a su ubicación en Gladys que haya emitido en las últimas 24 horas."
+      }
+    },
+    {
+      "key": "station_1",
+      "type": "string",
+      "label": {
+        "en": "Or a station identifier",
+        "fr": "Ou un identifiant de station",
+        "de": "Oder eine Stationskennung",
+        "es": "O un identificador de estación"
+      },
+      "description": {
+        "en": "Or the identifier of a station (000P2, STATIC0095, an official station…). Wins over the house.",
+        "fr": "Ou l’identifiant d’une station (000P2, STATIC0095, une station officielle…). Prioritaire sur la maison.",
+        "de": "Oder die Kennung einer Station (000P2, STATIC0095, eine offizielle Station …). Hat Vorrang vor dem Haus.",
+        "es": "O el identificador de una estación (000P2, STATIC0095, una estación oficial…). Prevalece sobre la casa."
+      },
+      "placeholder": {
+        "en": "000P2",
+        "fr": "000P2",
+        "de": "000P2",
+        "es": "000P2"
+      }
+    },
+    {
+      "key": "station_2_section",
+      "type": "section",
+      "label": {
+        "en": "Station 2",
+        "fr": "Station 2",
+        "de": "Station 2",
+        "es": "Estación 2"
+      },
+      "description": {
+        "en": "Optional.",
+        "fr": "Facultatif.",
+        "de": "Optional.",
+        "es": "Opcional."
+      }
+    },
+    {
+      "key": "house_2",
+      "type": "select",
+      "source": "houses",
+      "label": {
+        "en": "House",
+        "fr": "Maison",
+        "de": "Haus",
+        "es": "Casa"
+      },
+      "description": {
+        "en": "The nearest StatIC station of its location in Gladys that reported in the last 24 hours.",
+        "fr": "La station StatIC la plus proche de sa position dans Gladys ayant émis dans les dernières 24 heures.",
+        "de": "Die nächste StatIC-Station seines Standorts in Gladys, die in den letzten 24 Stunden gemeldet hat.",
+        "es": "La estación StatIC más cercana a su ubicación en Gladys que haya emitido en las últimas 24 horas."
+      }
+    },
+    {
+      "key": "station_2",
+      "type": "string",
+      "label": {
+        "en": "Or a station identifier",
+        "fr": "Ou un identifiant de station",
+        "de": "Oder eine Stationskennung",
+        "es": "O un identificador de estación"
+      },
+      "description": {
+        "en": "Or the identifier of a station (000P2, STATIC0095, an official station…). Wins over the house.",
+        "fr": "Ou l’identifiant d’une station (000P2, STATIC0095, une station officielle…). Prioritaire sur la maison.",
+        "de": "Oder die Kennung einer Station (000P2, STATIC0095, eine offizielle Station …). Hat Vorrang vor dem Haus.",
+        "es": "O el identificador de una estación (000P2, STATIC0095, una estación oficial…). Prevalece sobre la casa."
+      },
+      "placeholder": {
+        "en": "000P2",
+        "fr": "000P2",
+        "de": "000P2",
+        "es": "000P2"
+      }
+    },
+    {
+      "key": "station_3_section",
+      "type": "section",
+      "label": {
+        "en": "Station 3",
+        "fr": "Station 3",
+        "de": "Station 3",
+        "es": "Estación 3"
+      },
+      "description": {
+        "en": "Optional.",
+        "fr": "Facultatif.",
+        "de": "Optional.",
+        "es": "Opcional."
+      }
+    },
+    {
+      "key": "house_3",
+      "type": "select",
+      "source": "houses",
+      "label": {
+        "en": "House",
+        "fr": "Maison",
+        "de": "Haus",
+        "es": "Casa"
+      },
+      "description": {
+        "en": "The nearest StatIC station of its location in Gladys that reported in the last 24 hours.",
+        "fr": "La station StatIC la plus proche de sa position dans Gladys ayant émis dans les dernières 24 heures.",
+        "de": "Die nächste StatIC-Station seines Standorts in Gladys, die in den letzten 24 Stunden gemeldet hat.",
+        "es": "La estación StatIC más cercana a su ubicación en Gladys que haya emitido en las últimas 24 horas."
+      }
+    },
+    {
+      "key": "station_3",
+      "type": "string",
+      "label": {
+        "en": "Or a station identifier",
+        "fr": "Ou un identifiant de station",
+        "de": "Oder eine Stationskennung",
+        "es": "O un identificador de estación"
+      },
+      "description": {
+        "en": "Or the identifier of a station (000P2, STATIC0095, an official station…). Wins over the house.",
+        "fr": "Ou l’identifiant d’une station (000P2, STATIC0095, une station officielle…). Prioritaire sur la maison.",
+        "de": "Oder die Kennung einer Station (000P2, STATIC0095, eine offizielle Station …). Hat Vorrang vor dem Haus.",
+        "es": "O el identificador de una estación (000P2, STATIC0095, una estación oficial…). Prevalece sobre la casa."
+      },
+      "placeholder": {
+        "en": "000P2",
+        "fr": "000P2",
+        "de": "000P2",
+        "es": "000P2"
+      }
+    },
+    {
+      "key": "options",
+      "type": "section",
+      "label": {
+        "en": "Options",
+        "fr": "Options",
+        "de": "Optionen",
+        "es": "Opciones"
+      },
+      "description": {
+        "en": "Infoclimat is run by volunteers: all the stations are read in one request, every 10 minutes at most.",
+        "fr": "Infoclimat fonctionne grâce à des bénévoles : toutes les stations sont lues en une seule requête, toutes les 10 minutes au plus.",
+        "de": "Infoclimat wird von Freiwilligen betrieben: Alle Stationen werden in einer einzigen Anfrage gelesen, höchstens alle 10 Minuten.",
+        "es": "Infoclimat funciona gracias a voluntarios: todas las estaciones se leen en una sola petición, como mucho cada 10 minutos."
+      }
+    },
+    {
+      "key": "interval",
+      "type": "select",
+      "default": "10",
+      "label": {
+        "en": "Reading interval",
+        "fr": "Intervalle de lecture",
+        "de": "Abfrageintervall",
+        "es": "Intervalo de lectura"
+      },
+      "description": {
+        "en": "Minutes between two readings of Infoclimat.",
+        "fr": "Minutes entre deux lectures d’Infoclimat.",
+        "de": "Minuten zwischen zwei Abfragen von Infoclimat.",
+        "es": "Minutos entre dos lecturas de Infoclimat."
+      },
+      "options": [
+        {
+          "value": "10",
+          "label": {
+            "en": "10 minutes",
+            "fr": "10 minutes",
+            "de": "10 Minuten",
+            "es": "10 minutos"
+          }
+        },
+        {
+          "value": "15",
+          "label": {
+            "en": "15 minutes",
+            "fr": "15 minutes",
+            "de": "15 Minuten",
+            "es": "15 minutos"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "en": "30 minutes",
+            "fr": "30 minutes",
+            "de": "30 Minuten",
+            "es": "30 minutos"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "en": "60 minutes",
+            "fr": "60 minutes",
+            "de": "60 Minuten",
+            "es": "60 minutos"
+          }
+        }
+      ]
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "default": "auto",
+      "label": {
+        "en": "Language of the texts",
+        "fr": "Langue des textes",
+        "de": "Sprache der Texte",
+        "es": "Idioma de los textos"
+      },
+      "description": {
+        "en": "Device names and the texts given to scenes. Automatic: the language of the last widget shown.",
+        "fr": "Noms des appareils et textes transmis aux scènes. Automatique : la langue du dernier widget affiché.",
+        "de": "Gerätenamen und die an Szenen übergebenen Texte. Automatisch: die Sprache des zuletzt angezeigten Widgets.",
+        "es": "Nombres de los dispositivos y textos pasados a las escenas. Automático: el idioma del último widget mostrado."
+      },
+      "options": [
+        {
+          "value": "auto",
+          "label": {
+            "en": "Automatic",
+            "fr": "Automatique",
+            "de": "Automatisch",
+            "es": "Automático"
+          }
+        },
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "English",
+            "de": "English",
+            "es": "English"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "Français",
+            "fr": "Français",
+            "de": "Français",
+            "es": "Français"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "Deutsch",
+            "fr": "Deutsch",
+            "de": "Deutsch",
+            "es": "Deutsch"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Español",
+            "fr": "Español",
+            "de": "Español",
+            "es": "Español"
+          }
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "key": "read_now",
+      "timeout_seconds": 60,
+      "label": {
+        "en": "Read now",
+        "fr": "Lire maintenant",
+        "de": "Jetzt lesen",
+        "es": "Leer ahora"
+      },
+      "description": {
+        "en": "Finds the stations and reads them now (not twice within 2 minutes).",
+        "fr": "Trouve les stations et les lit tout de suite (pas deux fois en 2 minutes).",
+        "de": "Ermittelt die Stationen und liest sie sofort (nicht zweimal innerhalb von 2 Minuten).",
+        "es": "Localiza las estaciones y las lee ahora (no dos veces en 2 minutos)."
+      }
+    },
+    {
+      "key": "diagnostic",
+      "timeout_seconds": 10,
+      "label": {
+        "en": "Diagnostic",
+        "fr": "Diagnostic",
+        "de": "Diagnose",
+        "es": "Diagnóstico"
+      },
+      "description": {
+        "en": "Writes the state of the integration to its logs, without the key.",
+        "fr": "Écrit l’état de l’intégration dans ses journaux, sans la clé.",
+        "de": "Schreibt den Zustand der Integration in ihre Logs, ohne den Schlüssel.",
+        "es": "Escribe el estado de la integración en sus registros, sin la clave."
+      }
+    }
+  ],
+  "widgets": [
+    {
+      "key": "current",
+      "icon": "thermometer",
+      "label": {
+        "en": "Infoclimat station",
+        "fr": "Station Infoclimat",
+        "de": "Infoclimat-Station",
+        "es": "Estación Infoclimat"
+      },
+      "description": {
+        "en": "The latest reading of a station: temperature, humidity, wind, pressure, rain.",
+        "fr": "Le dernier relevé d’une station : température, humidité, vent, pression, pluie.",
+        "de": "Die letzte Messung einer Station: Temperatur, Feuchtigkeit, Wind, Luftdruck, Regen.",
+        "es": "La última lectura de una estación: temperatura, humedad, viento, presión, lluvia."
+      },
+      "settings": [
+        {
+          "key": "station",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Station",
+            "fr": "Station",
+            "de": "Station",
+            "es": "Estación"
+          },
+          "description": {
+            "en": "An Infoclimat device. Leave empty for the first station.",
+            "fr": "Un appareil Infoclimat. Laissez vide pour la première station.",
+            "de": "Ein Infoclimat-Gerät. Leer lassen für die erste Station.",
+            "es": "Un dispositivo Infoclimat. Déjelo vacío para la primera estación."
+          }
+        }
+      ]
+    },
+    {
+      "key": "history",
+      "icon": "activity",
+      "label": {
+        "en": "Infoclimat, last 24 h",
+        "fr": "Infoclimat, dernières 24 h",
+        "de": "Infoclimat, letzte 24 Std.",
+        "es": "Infoclimat, últimas 24 h"
+      },
+      "description": {
+        "en": "A measure of a station over the last 24 hours, its lowest and highest values.",
+        "fr": "Une mesure d’une station sur les dernières 24 heures, ses valeurs extrêmes.",
+        "de": "Ein Messwert einer Station über die letzten 24 Stunden, mit Tiefst- und Höchstwert.",
+        "es": "Una medida de una estación en las últimas 24 horas, sus valores extremos."
+      },
+      "settings": [
+        {
+          "key": "station",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Station",
+            "fr": "Station",
+            "de": "Station",
+            "es": "Estación"
+          },
+          "description": {
+            "en": "An Infoclimat device. Leave empty for the first station.",
+            "fr": "Un appareil Infoclimat. Laissez vide pour la première station.",
+            "de": "Ein Infoclimat-Gerät. Leer lassen für die erste Station.",
+            "es": "Un dispositivo Infoclimat. Déjelo vacío para la primera estación."
+          }
+        },
+        {
+          "key": "measure",
+          "type": "select",
+          "default": "temperature",
+          "required": false,
+          "label": {
+            "en": "Measure",
+            "fr": "Mesure",
+            "de": "Messwert",
+            "es": "Medida"
+          },
+          "options": [
+            {
+              "value": "temperature",
+              "label": {
+                "en": "Temperature and dew point",
+                "fr": "Température et point de rosée",
+                "de": "Temperatur und Taupunkt",
+                "es": "Temperatura y punto de rocío"
+              }
+            },
+            {
+              "value": "humidity",
+              "label": {
+                "en": "Humidity",
+                "fr": "Humidité",
+                "de": "Luftfeuchtigkeit",
+                "es": "Humedad"
+              }
+            },
+            {
+              "value": "pressure",
+              "label": {
+                "en": "Pressure",
+                "fr": "Pression",
+                "de": "Luftdruck",
+                "es": "Presión"
+              }
+            },
+            {
+              "value": "wind",
+              "label": {
+                "en": "Wind and gusts",
+                "fr": "Vent et rafales",
+                "de": "Wind und Böen",
+                "es": "Viento y ráfagas"
+              }
+            },
+            {
+              "value": "rain",
+              "label": {
+                "en": "Rain",
+                "fr": "Pluie",
+                "de": "Regen",
+                "es": "Lluvia"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "compare",
+      "icon": "list",
+      "label": {
+        "en": "Infoclimat stations",
+        "fr": "Stations Infoclimat",
+        "de": "Infoclimat-Stationen",
+        "es": "Estaciones Infoclimat"
+      },
+      "description": {
+        "en": "The followed stations side by side, a silent one flagged.",
+        "fr": "Les stations suivies côte à côte, une station muette signalée.",
+        "de": "Die verfolgten Stationen nebeneinander, stumme Stationen markiert.",
+        "es": "Las estaciones seguidas lado a lado, con las estaciones sin datos señaladas."
+      }
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "rain_started",
+      "label": {
+        "en": "Infoclimat: rain started",
+        "fr": "Infoclimat : début de pluie",
+        "de": "Infoclimat: Regen beginnt",
+        "es": "Infoclimat: empieza a llover"
+      },
+      "description": {
+        "en": "Rain is measured at a station (rain of the last hour above 0).",
+        "fr": "De la pluie est mesurée à une station (pluie de la dernière heure supérieure à 0).",
+        "de": "An einer Station wird Regen gemessen (Regen der letzten Stunde über 0).",
+        "es": "Se mide lluvia en una estación (lluvia de la última hora superior a 0)."
+      },
+      "fields": [
+        {
+          "key": "station",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Station",
+            "fr": "Station",
+            "de": "Station",
+            "es": "Estación"
+          },
+          "description": {
+            "en": "An Infoclimat device. Leave empty for any station.",
+            "fr": "Un appareil Infoclimat. Laissez vide pour toutes les stations.",
+            "de": "Ein Infoclimat-Gerät. Leer lassen für alle Stationen.",
+            "es": "Un dispositivo Infoclimat. Déjelo vacío para cualquier estación."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "station",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "station_name",
+          "type": "string",
+          "label": {
+            "en": "Station name",
+            "fr": "Nom de la station",
+            "de": "Name der Station",
+            "es": "Nombre de la estación"
+          }
+        },
+        {
+          "key": "temperature",
+          "type": "number",
+          "label": {
+            "en": "Temperature (°C)",
+            "fr": "Température (°C)",
+            "de": "Temperatur (°C)",
+            "es": "Temperatura (°C)"
+          }
+        },
+        {
+          "key": "rain_1h",
+          "type": "number",
+          "label": {
+            "en": "Rain over the last hour (mm)",
+            "fr": "Pluie de la dernière heure (mm)",
+            "de": "Regen der letzten Stunde (mm)",
+            "es": "Lluvia de la última hora (mm)"
+          }
+        },
+        {
+          "key": "rain_today",
+          "type": "number",
+          "label": {
+            "en": "Rain today (mm)",
+            "fr": "Pluie du jour (mm)",
+            "de": "Regen heute (mm)",
+            "es": "Lluvia del día (mm)"
+          }
+        },
+        {
+          "key": "observed_at",
+          "type": "string",
+          "label": {
+            "en": "Time of the reading (UTC, ISO)",
+            "fr": "Heure du relevé (UTC, ISO)",
+            "de": "Zeit der Messung (UTC, ISO)",
+            "es": "Hora de la lectura (UTC, ISO)"
+          }
+        },
+        {
+          "key": "minutes_ago",
+          "type": "number",
+          "label": {
+            "en": "Minutes since the reading",
+            "fr": "Minutes depuis le relevé",
+            "de": "Minuten seit der Messung",
+            "es": "Minutos desde la lectura"
+          }
+        }
+      ]
+    },
+    {
+      "key": "rain_stopped",
+      "label": {
+        "en": "Infoclimat: rain stopped",
+        "fr": "Infoclimat : fin de pluie",
+        "de": "Infoclimat: Regen hört auf",
+        "es": "Infoclimat: deja de llover"
+      },
+      "description": {
+        "en": "The rain of the last hour at a station falls back to 0.",
+        "fr": "La pluie de la dernière heure d’une station retombe à 0.",
+        "de": "Der Regen der letzten Stunde an einer Station fällt auf 0 zurück.",
+        "es": "La lluvia de la última hora de una estación vuelve a 0."
+      },
+      "fields": [
+        {
+          "key": "station",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Station",
+            "fr": "Station",
+            "de": "Station",
+            "es": "Estación"
+          },
+          "description": {
+            "en": "An Infoclimat device. Leave empty for any station.",
+            "fr": "Un appareil Infoclimat. Laissez vide pour toutes les stations.",
+            "de": "Ein Infoclimat-Gerät. Leer lassen für alle Stationen.",
+            "es": "Un dispositivo Infoclimat. Déjelo vacío para cualquier estación."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "station",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "station_name",
+          "type": "string",
+          "label": {
+            "en": "Station name",
+            "fr": "Nom de la station",
+            "de": "Name der Station",
+            "es": "Nombre de la estación"
+          }
+        },
+        {
+          "key": "temperature",
+          "type": "number",
+          "label": {
+            "en": "Temperature (°C)",
+            "fr": "Température (°C)",
+            "de": "Temperatur (°C)",
+            "es": "Temperatura (°C)"
+          }
+        },
+        {
+          "key": "rain_1h",
+          "type": "number",
+          "label": {
+            "en": "Rain over the last hour (mm)",
+            "fr": "Pluie de la dernière heure (mm)",
+            "de": "Regen der letzten Stunde (mm)",
+            "es": "Lluvia de la última hora (mm)"
+          }
+        },
+        {
+          "key": "rain_today",
+          "type": "number",
+          "label": {
+            "en": "Rain today (mm)",
+            "fr": "Pluie du jour (mm)",
+            "de": "Regen heute (mm)",
+            "es": "Lluvia del día (mm)"
+          }
+        },
+        {
+          "key": "observed_at",
+          "type": "string",
+          "label": {
+            "en": "Time of the reading (UTC, ISO)",
+            "fr": "Heure du relevé (UTC, ISO)",
+            "de": "Zeit der Messung (UTC, ISO)",
+            "es": "Hora de la lectura (UTC, ISO)"
+          }
+        },
+        {
+          "key": "minutes_ago",
+          "type": "number",
+          "label": {
+            "en": "Minutes since the reading",
+            "fr": "Minutes depuis le relevé",
+            "de": "Minuten seit der Messung",
+            "es": "Minutos desde la lectura"
+          }
+        }
+      ]
+    },
+    {
+      "key": "station_silent",
+      "label": {
+        "en": "Infoclimat: station silent",
+        "fr": "Infoclimat : station muette",
+        "de": "Infoclimat: Station stumm",
+        "es": "Infoclimat: estación sin datos"
+      },
+      "description": {
+        "en": "A station gave no reading for 90 minutes.",
+        "fr": "Une station n’a donné aucun relevé depuis 90 minutes.",
+        "de": "Eine Station hat seit 90 Minuten keine Messung geliefert.",
+        "es": "Una estación no ha dado ninguna lectura desde hace 90 minutos."
+      },
+      "fields": [
+        {
+          "key": "station",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Station",
+            "fr": "Station",
+            "de": "Station",
+            "es": "Estación"
+          },
+          "description": {
+            "en": "An Infoclimat device. Leave empty for any station.",
+            "fr": "Un appareil Infoclimat. Laissez vide pour toutes les stations.",
+            "de": "Ein Infoclimat-Gerät. Leer lassen für alle Stationen.",
+            "es": "Un dispositivo Infoclimat. Déjelo vacío para cualquier estación."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "station",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "station_name",
+          "type": "string",
+          "label": {
+            "en": "Station name",
+            "fr": "Nom de la station",
+            "de": "Name der Station",
+            "es": "Nombre de la estación"
+          }
+        },
+        {
+          "key": "temperature",
+          "type": "number",
+          "label": {
+            "en": "Temperature (°C)",
+            "fr": "Température (°C)",
+            "de": "Temperatur (°C)",
+            "es": "Temperatura (°C)"
+          }
+        },
+        {
+          "key": "rain_1h",
+          "type": "number",
+          "label": {
+            "en": "Rain over the last hour (mm)",
+            "fr": "Pluie de la dernière heure (mm)",
+            "de": "Regen der letzten Stunde (mm)",
+            "es": "Lluvia de la última hora (mm)"
+          }
+        },
+        {
+          "key": "rain_today",
+          "type": "number",
+          "label": {
+            "en": "Rain today (mm)",
+            "fr": "Pluie du jour (mm)",
+            "de": "Regen heute (mm)",
+            "es": "Lluvia del día (mm)"
+          }
+        },
+        {
+          "key": "observed_at",
+          "type": "string",
+          "label": {
+            "en": "Time of the reading (UTC, ISO)",
+            "fr": "Heure du relevé (UTC, ISO)",
+            "de": "Zeit der Messung (UTC, ISO)",
+            "es": "Hora de la lectura (UTC, ISO)"
+          }
+        },
+        {
+          "key": "minutes_ago",
+          "type": "number",
+          "label": {
+            "en": "Minutes since the reading",
+            "fr": "Minutes depuis le relevé",
+            "de": "Minuten seit der Messung",
+            "es": "Minutos desde la lectura"
+          }
+        }
+      ]
+    },
+    {
+      "key": "station_back",
+      "label": {
+        "en": "Infoclimat: station back",
+        "fr": "Infoclimat : station revenue",
+        "de": "Infoclimat: Station wieder da",
+        "es": "Infoclimat: estación de vuelta"
+      },
+      "description": {
+        "en": "A silent station reports again.",
+        "fr": "Une station muette émet de nouveau.",
+        "de": "Eine stumme Station meldet sich wieder.",
+        "es": "Una estación sin datos vuelve a emitir."
+      },
+      "fields": [
+        {
+          "key": "station",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Station",
+            "fr": "Station",
+            "de": "Station",
+            "es": "Estación"
+          },
+          "description": {
+            "en": "An Infoclimat device. Leave empty for any station.",
+            "fr": "Un appareil Infoclimat. Laissez vide pour toutes les stations.",
+            "de": "Ein Infoclimat-Gerät. Leer lassen für alle Stationen.",
+            "es": "Un dispositivo Infoclimat. Déjelo vacío para cualquier estación."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "station",
+          "type": "string",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          }
+        },
+        {
+          "key": "station_name",
+          "type": "string",
+          "label": {
+            "en": "Station name",
+            "fr": "Nom de la station",
+            "de": "Name der Station",
+            "es": "Nombre de la estación"
+          }
+        },
+        {
+          "key": "temperature",
+          "type": "number",
+          "label": {
+            "en": "Temperature (°C)",
+            "fr": "Température (°C)",
+            "de": "Temperatur (°C)",
+            "es": "Temperatura (°C)"
+          }
+        },
+        {
+          "key": "rain_1h",
+          "type": "number",
+          "label": {
+            "en": "Rain over the last hour (mm)",
+            "fr": "Pluie de la dernière heure (mm)",
+            "de": "Regen der letzten Stunde (mm)",
+            "es": "Lluvia de la última hora (mm)"
+          }
+        },
+        {
+          "key": "rain_today",
+          "type": "number",
+          "label": {
+            "en": "Rain today (mm)",
+            "fr": "Pluie du jour (mm)",
+            "de": "Regen heute (mm)",
+            "es": "Lluvia del día (mm)"
+          }
+        },
+        {
+          "key": "observed_at",
+          "type": "string",
+          "label": {
+            "en": "Time of the reading (UTC, ISO)",
+            "fr": "Heure du relevé (UTC, ISO)",
+            "de": "Zeit der Messung (UTC, ISO)",
+            "es": "Hora de la lectura (UTC, ISO)"
+          }
+        },
+        {
+          "key": "minutes_ago",
+          "type": "number",
+          "label": {
+            "en": "Minutes since the reading",
+            "fr": "Minutes depuis le relevé",
+            "de": "Minuten seit der Messung",
+            "es": "Minutos desde la lectura"
+          }
+        }
+      ]
+    },
+    {
+      "key": "key_refused",
+      "label": {
+        "en": "Infoclimat: key refused",
+        "fr": "Infoclimat : clé refusée",
+        "de": "Infoclimat: Schlüssel abgelehnt",
+        "es": "Infoclimat: clave rechazada"
+      },
+      "description": {
+        "en": "Infoclimat refuses the key (once, until it works again).",
+        "fr": "Infoclimat refuse la clé (une fois, jusqu’à ce qu’elle remarche).",
+        "de": "Infoclimat lehnt den Schlüssel ab (einmal, bis er wieder funktioniert).",
+        "es": "Infoclimat rechaza la clave (una vez, hasta que vuelva a funcionar)."
+      },
+      "variables": [
+        {
+          "key": "message",
+          "type": "string",
+          "label": {
+            "en": "Message of Infoclimat",
+            "fr": "Message d’Infoclimat",
+            "de": "Meldung von Infoclimat",
+            "es": "Mensaje de Infoclimat"
+          }
+        }
+      ]
+    }
+  ],
+  "scene_actions": [
+    {
+      "key": "get_weather",
+      "timeout_seconds": 10,
+      "label": {
+        "en": "Infoclimat: read a station",
+        "fr": "Infoclimat : lire une station",
+        "de": "Infoclimat: Station lesen",
+        "es": "Infoclimat: leer una estación"
+      },
+      "description": {
+        "en": "The latest reading of a station, and a sentence for a message.",
+        "fr": "Le dernier relevé d’une station, et une phrase pour un message.",
+        "de": "Die letzte Messung einer Station und ein Satz für eine Nachricht.",
+        "es": "La última lectura de una estación y una frase para un mensaje."
+      },
+      "fields": [
+        {
+          "key": "station",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": {
+            "en": "Station",
+            "fr": "Station",
+            "de": "Station",
+            "es": "Estación"
+          },
+          "description": {
+            "en": "An Infoclimat device. Leave empty for the first station.",
+            "fr": "Un appareil Infoclimat. Laissez vide pour la première station.",
+            "de": "Ein Infoclimat-Gerät. Leer lassen für die erste Station.",
+            "es": "Un dispositivo Infoclimat. Déjelo vacío para la primera estación."
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "key": "temperature",
+          "type": "number",
+          "label": {
+            "en": "Temperature (°C)",
+            "fr": "Température (°C)",
+            "de": "Temperatur (°C)",
+            "es": "Temperatura (°C)"
+          }
+        },
+        {
+          "key": "humidity",
+          "type": "number",
+          "label": {
+            "en": "Humidity (%)",
+            "fr": "Humidité (%)",
+            "de": "Luftfeuchtigkeit (%)",
+            "es": "Humedad (%)"
+          }
+        },
+        {
+          "key": "pressure",
+          "type": "number",
+          "label": {
+            "en": "Pressure (hPa)",
+            "fr": "Pression (hPa)",
+            "de": "Luftdruck (hPa)",
+            "es": "Presión (hPa)"
+          }
+        },
+        {
+          "key": "dew_point",
+          "type": "number",
+          "label": {
+            "en": "Dew point (°C)",
+            "fr": "Point de rosée (°C)",
+            "de": "Taupunkt (°C)",
+            "es": "Punto de rocío (°C)"
+          }
+        },
+        {
+          "key": "wind_speed",
+          "type": "number",
+          "label": {
+            "en": "Mean wind (km/h)",
+            "fr": "Vent moyen (km/h)",
+            "de": "Mittelwind (km/h)",
+            "es": "Viento medio (km/h)"
+          }
+        },
+        {
+          "key": "wind_gust",
+          "type": "number",
+          "label": {
+            "en": "Gusts (km/h)",
+            "fr": "Rafales (km/h)",
+            "de": "Böen (km/h)",
+            "es": "Ráfagas (km/h)"
+          }
+        },
+        {
+          "key": "wind_direction",
+          "type": "number",
+          "label": {
+            "en": "Wind direction (°)",
+            "fr": "Direction du vent (°)",
+            "de": "Windrichtung (°)",
+            "es": "Dirección del viento (°)"
+          }
+        },
+        {
+          "key": "wind_direction_name",
+          "type": "string",
+          "label": {
+            "en": "Wind direction (N, SW…)",
+            "fr": "Direction du vent (N, SO…)",
+            "de": "Windrichtung (N, SW …)",
+            "es": "Dirección del viento (N, SO…)"
+          }
+        },
+        {
+          "key": "rain_1h",
+          "type": "number",
+          "label": {
+            "en": "Rain over the last hour (mm)",
+            "fr": "Pluie de la dernière heure (mm)",
+            "de": "Regen der letzten Stunde (mm)",
+            "es": "Lluvia de la última hora (mm)"
+          }
+        },
+        {
+          "key": "rain_today",
+          "type": "number",
+          "label": {
+            "en": "Rain today (mm)",
+            "fr": "Pluie du jour (mm)",
+            "de": "Regen heute (mm)",
+            "es": "Lluvia del día (mm)"
+          }
+        },
+        {
+          "key": "radiation",
+          "type": "number",
+          "label": {
+            "en": "Solar radiation (W/m²)",
+            "fr": "Rayonnement solaire (W/m²)",
+            "de": "Sonneneinstrahlung (W/m²)",
+            "es": "Radiación solar (W/m²)"
+          }
+        },
+        {
+          "key": "station_name",
+          "type": "string",
+          "label": {
+            "en": "Station name",
+            "fr": "Nom de la station",
+            "de": "Name der Station",
+            "es": "Nombre de la estación"
+          }
+        },
+        {
+          "key": "observed_at",
+          "type": "string",
+          "label": {
+            "en": "Time of the reading (UTC, ISO)",
+            "fr": "Heure du relevé (UTC, ISO)",
+            "de": "Zeit der Messung (UTC, ISO)",
+            "es": "Hora de la lectura (UTC, ISO)"
+          }
+        },
+        {
+          "key": "minutes_ago",
+          "type": "number",
+          "label": {
+            "en": "Minutes since the reading",
+            "fr": "Minutes depuis le relevé",
+            "de": "Minuten seit der Messung",
+            "es": "Minutos desde la lectura"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary",
+            "fr": "Résumé",
+            "de": "Zusammenfassung",
+            "es": "Resumen"
+          }
+        }
+      ]
+    }
+  ]
+}

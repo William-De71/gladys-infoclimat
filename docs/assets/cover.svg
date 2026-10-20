@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="534" viewBox="0 0 800 534">
+  <!-- Cover of the Infoclimat integration for Gladys Assistant (illustration,
+       no Infoclimat logo): an amateur weather station in a garden and the
+       card of its latest reading. Built into cover.jpg by scripts/build-cover.sh. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cfe6f7"/>
+      <stop offset="1" stop-color="#eef6fb"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f5f7fb"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="534" fill="url(#sky)"/>
+
+  <!-- a passing shower on the left, sun on the right -->
+  <g fill="#ffffff">
+    <ellipse cx="236" cy="72" rx="74" ry="28"/>
+    <ellipse cx="282" cy="56" rx="52" ry="28"/>
+    <ellipse cx="196" cy="62" rx="40" ry="22"/>
+  </g>
+  <g stroke="#6aa9d8" stroke-width="5" stroke-linecap="round">
+    <path d="M206 112 l-6 16"/><path d="M234 116 l-6 16"/><path d="M262 112 l-6 16"/>
+    <path d="M290 116 l-6 16"/><path d="M220 142 l-6 16"/><path d="M276 142 l-6 16"/>
+  </g>
+  <circle cx="690" cy="96" r="38" fill="#ffd36b"/>
+  <g stroke="#ffd36b" stroke-width="6" stroke-linecap="round">
+    <path d="M690 36 v-14"/><path d="M690 170 v-14"/><path d="M630 96 h-14"/><path d="M764 96 h-14"/>
+    <path d="M648 54 l-10 -10"/><path d="M742 148 l-10 -10"/><path d="M732 54 l10 -10"/><path d="M638 148 l10 -10"/>
+  </g>
+
+  <!-- hills -->
+  <path d="M0 430 C 160 380, 300 420, 420 410 S 680 370, 800 410 V534 H0 Z" fill="#b8d9a6"/>
+  <path d="M0 470 C 200 440, 420 480, 800 450 V534 H0 Z" fill="#9cc98a"/>
+
+  <!-- the weather station: a mast, an anemometer cup set, a wind vane and a screen -->
+  <g transform="translate(96 150)" fill="none" stroke="#56606b" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40 40 V 262" stroke-width="7"/>
+    <path d="M40 40 H -10" stroke-width="5"/>
+    <path d="M40 40 H 90" stroke-width="5"/>
+    <!-- anemometer cups -->
+    <path d="M-10 40 V 18" stroke-width="4"/>
+    <path d="M-34 18 H 14" stroke-width="4"/>
+    <circle cx="-38" cy="18" r="8" fill="#ffffff" stroke-width="4"/>
+    <circle cx="18" cy="18" r="8" fill="#ffffff" stroke-width="4"/>
+    <!-- wind vane -->
+    <path d="M90 40 V 22" stroke-width="4"/>
+    <path d="M62 22 H 118" stroke-width="4"/>
+    <path d="M62 22 l12 -8 M62 22 l12 8" stroke-width="4"/>
+    <path d="M118 10 v24 l14 -12 z" fill="#e2725b" stroke="#e2725b" stroke-width="2"/>
+    <!-- radiation screen: stacked white plates -->
+    <g fill="#ffffff" stroke-width="4">
+      <rect x="10" y="150" width="60" height="12" rx="4"/>
+      <rect x="14" y="166" width="52" height="12" rx="4"/>
+      <rect x="18" y="182" width="44" height="12" rx="4"/>
+      <rect x="22" y="198" width="36" height="12" rx="4"/>
+    </g>
+  </g>
+
+  <!-- the card of the latest reading -->
+  <g transform="translate(330 120)">
+    <rect width="380" height="296" rx="24" fill="url(#card)" stroke="#d6dde6" stroke-width="2"/>
+    <circle cx="44" cy="46" r="8" fill="#2e8f5b"/>
+    <rect x="64" y="38" width="150" height="16" rx="8" fill="#c9d3de"/>
+    <text x="40" y="132" font-family="Source Sans Pro, Helvetica, Arial, sans-serif" font-size="64" font-weight="700" fill="#467fcf">12.5<tspan font-size="34" fill="#667081"> °C</tspan></text>
+    <g font-family="Source Sans Pro, Helvetica, Arial, sans-serif" font-weight="600" fill="#495057">
+      <g transform="translate(40 172)">
+        <rect width="92" height="80" rx="14" fill="#eef3f8"/>
+        <path d="M46 18 c -10 14 -14 20 -14 26 a 14 14 0 0 0 28 0 c 0 -6 -4 -12 -14 -26 z" fill="#45aaf2"/>
+        <text x="46" y="72" font-size="18" text-anchor="middle">81 %</text>
+      </g>
+      <g transform="translate(144 172)">
+        <rect width="92" height="80" rx="14" fill="#eef3f8"/>
+        <g fill="none" stroke="#667081" stroke-width="5" stroke-linecap="round">
+          <path d="M22 30 H 58 c 10 0 10 -12 2 -12"/>
+          <path d="M22 44 H 66 c 10 0 10 12 2 12"/>
+        </g>
+        <text x="46" y="72" font-size="18" text-anchor="middle">14 km/h</text>
+      </g>
+      <g transform="translate(248 172)">
+        <rect width="92" height="80" rx="14" fill="#eef3f8"/>
+        <g stroke="#45aaf2" stroke-width="5" stroke-linecap="round">
+          <path d="M34 22 l-6 14"/><path d="M50 22 l-6 14"/><path d="M66 22 l-6 14"/>
+        </g>
+        <text x="46" y="72" font-size="18" text-anchor="middle">1.8 mm</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- title -->
+  <text x="400" y="486" text-anchor="middle" font-family="Source Sans Pro, Helvetica, Arial, sans-serif" font-size="46" font-weight="700" fill="#1f3a52">Infoclimat <tspan font-weight="400" fill="#2f5d7c">for Gladys Assistant</tspan></text>
+  <text x="400" y="518" text-anchor="middle" font-family="Source Sans Pro, Helvetica, Arial, sans-serif" font-size="20" fill="#2f5d7c">StatIC weather stations · temperature · wind · rain</text>
+</svg>

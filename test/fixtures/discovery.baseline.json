@@ -1,0 +1,459 @@
+{
+  "version": "0.1.0",
+  "devices": {
+    "every_measure": {
+      "external_id": "ext:test-integration:station:000c7",
+      "should_poll": false,
+      "params": ["INFOCLIMAT_STATION_ID", "INFOCLIMAT_LICENSE"],
+      "features": [
+        {
+          "external_id": "ext:test-integration:station:000c7:temperature",
+          "category": "temperature-sensor",
+          "type": "decimal",
+          "unit": "celsius",
+          "min": -60,
+          "max": 60,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:000c7:humidity",
+          "category": "humidity-sensor",
+          "type": "decimal",
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:000c7:pressure",
+          "category": "pressure-sensor",
+          "type": "decimal",
+          "unit": "hPa",
+          "min": 850,
+          "max": 1100,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:000c7:dew_point",
+          "category": "temperature-sensor",
+          "type": "probe",
+          "unit": "celsius",
+          "min": -60,
+          "max": 60,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:000c7:wind_speed",
+          "category": "speed-sensor",
+          "type": "decimal",
+          "unit": "kilometer-per-hour",
+          "min": 0,
+          "max": 400,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:000c7:wind_gust",
+          "category": "speed-sensor",
+          "type": "decimal",
+          "unit": "kilometer-per-hour",
+          "min": 0,
+          "max": 400,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:000c7:wind_direction",
+          "category": "angle-sensor",
+          "type": "integer",
+          "unit": "degree",
+          "min": 0,
+          "max": 360,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:000c7:rain_1h",
+          "category": "precipitation-sensor",
+          "type": "decimal",
+          "unit": "millimeter-per-hour",
+          "min": 0,
+          "max": 300,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:000c7:rain_today",
+          "category": "precipitation-sensor",
+          "type": "decimal",
+          "unit": "millimeter-per-day",
+          "min": 0,
+          "max": 1000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:000c7:snow_depth",
+          "category": "distance-sensor",
+          "type": "decimal",
+          "unit": "cm",
+          "min": 0,
+          "max": 1000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:test-integration:station:000c7:visibility",
+          "category": "distance-sensor",
+          "type": "decimal",
+          "unit": "m",
+          "min": 0,
+          "max": 100000,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    },
+    "static_id": {
+      "external_id": "ext:test-integration:station:static0495",
+      "should_poll": false,
+      "params": ["INFOCLIMAT_STATION_ID"],
+      "features": [
+        {
+          "external_id": "ext:test-integration:station:static0495:temperature",
+          "category": "temperature-sensor",
+          "type": "decimal",
+          "unit": "celsius",
+          "min": -60,
+          "max": 60,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "config_schema": [
+      {
+        "key": "intro",
+        "type": "section"
+      },
+      {
+        "key": "api_key",
+        "type": "secret"
+      },
+      {
+        "key": "stations",
+        "type": "section"
+      },
+      {
+        "key": "house_1",
+        "type": "select"
+      },
+      {
+        "key": "station_1",
+        "type": "string"
+      },
+      {
+        "key": "station_2_section",
+        "type": "section"
+      },
+      {
+        "key": "house_2",
+        "type": "select"
+      },
+      {
+        "key": "station_2",
+        "type": "string"
+      },
+      {
+        "key": "station_3_section",
+        "type": "section"
+      },
+      {
+        "key": "house_3",
+        "type": "select"
+      },
+      {
+        "key": "station_3",
+        "type": "string"
+      },
+      {
+        "key": "options",
+        "type": "section"
+      },
+      {
+        "key": "interval",
+        "type": "select"
+      },
+      {
+        "key": "language",
+        "type": "select"
+      }
+    ],
+    "actions": ["read_now", "diagnostic"],
+    "action_fields": {
+      "read_now": [],
+      "diagnostic": []
+    },
+    "widgets": [
+      {
+        "key": "current",
+        "settings": ["station"],
+        "options": {}
+      },
+      {
+        "key": "history",
+        "settings": ["station", "measure"],
+        "options": {
+          "measure": ["temperature", "humidity", "pressure", "wind", "rain"]
+        }
+      },
+      {
+        "key": "compare",
+        "settings": [],
+        "options": {}
+      }
+    ],
+    "scene_triggers": [
+      {
+        "key": "rain_started",
+        "fields": [
+          {
+            "key": "station",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "station",
+            "type": "string"
+          },
+          {
+            "key": "station_name",
+            "type": "string"
+          },
+          {
+            "key": "temperature",
+            "type": "number"
+          },
+          {
+            "key": "rain_1h",
+            "type": "number"
+          },
+          {
+            "key": "rain_today",
+            "type": "number"
+          },
+          {
+            "key": "observed_at",
+            "type": "string"
+          },
+          {
+            "key": "minutes_ago",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "rain_stopped",
+        "fields": [
+          {
+            "key": "station",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "station",
+            "type": "string"
+          },
+          {
+            "key": "station_name",
+            "type": "string"
+          },
+          {
+            "key": "temperature",
+            "type": "number"
+          },
+          {
+            "key": "rain_1h",
+            "type": "number"
+          },
+          {
+            "key": "rain_today",
+            "type": "number"
+          },
+          {
+            "key": "observed_at",
+            "type": "string"
+          },
+          {
+            "key": "minutes_ago",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "station_silent",
+        "fields": [
+          {
+            "key": "station",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "station",
+            "type": "string"
+          },
+          {
+            "key": "station_name",
+            "type": "string"
+          },
+          {
+            "key": "temperature",
+            "type": "number"
+          },
+          {
+            "key": "rain_1h",
+            "type": "number"
+          },
+          {
+            "key": "rain_today",
+            "type": "number"
+          },
+          {
+            "key": "observed_at",
+            "type": "string"
+          },
+          {
+            "key": "minutes_ago",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "station_back",
+        "fields": [
+          {
+            "key": "station",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "station",
+            "type": "string"
+          },
+          {
+            "key": "station_name",
+            "type": "string"
+          },
+          {
+            "key": "temperature",
+            "type": "number"
+          },
+          {
+            "key": "rain_1h",
+            "type": "number"
+          },
+          {
+            "key": "rain_today",
+            "type": "number"
+          },
+          {
+            "key": "observed_at",
+            "type": "string"
+          },
+          {
+            "key": "minutes_ago",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "key_refused",
+        "fields": [],
+        "variables": [
+          {
+            "key": "message",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "scene_actions": [
+      {
+        "key": "get_weather",
+        "fields": ["station"],
+        "outputs": [
+          {
+            "key": "temperature",
+            "type": "number"
+          },
+          {
+            "key": "humidity",
+            "type": "number"
+          },
+          {
+            "key": "pressure",
+            "type": "number"
+          },
+          {
+            "key": "dew_point",
+            "type": "number"
+          },
+          {
+            "key": "wind_speed",
+            "type": "number"
+          },
+          {
+            "key": "wind_gust",
+            "type": "number"
+          },
+          {
+            "key": "wind_direction",
+            "type": "number"
+          },
+          {
+            "key": "wind_direction_name",
+            "type": "string"
+          },
+          {
+            "key": "rain_1h",
+            "type": "number"
+          },
+          {
+            "key": "rain_today",
+            "type": "number"
+          },
+          {
+            "key": "radiation",
+            "type": "number"
+          },
+          {
+            "key": "station_name",
+            "type": "string"
+          },
+          {
+            "key": "observed_at",
+            "type": "string"
+          },
+          {
+            "key": "minutes_ago",
+            "type": "number"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+}

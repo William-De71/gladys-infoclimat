@@ -1,0 +1,12 @@
+Gladys Infoclimat integration
+Copyright 2026 William Deren
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It reads the open data of Infoclimat (https://www.infoclimat.fr/opendata/), a
+French non-profit association, with the personal key of the user. The data
+belong to Infoclimat and to the owners of the stations, under the license of
+each station (Licence Ouverte / Etalab, CC BY or CC BY-NC); they are free for a
+personal, non-commercial use and must credit Infoclimat. This integration is
+not affiliated with nor endorsed by Infoclimat. The scope follows the Home
+Assistant "Infoclimat" integration of nickdesi (MIT); no code is taken from it.
