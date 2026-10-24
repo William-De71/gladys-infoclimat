@@ -5,6 +5,12 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions
 follow [Semantic Versioning](https://semver.org/). This file is generated at
 each release from the Conventional Commits: do not edit it by hand.
 
+## [0.1.1] - 2026-10-24
+
+### Security
+
+- **security:** build the image on Node.js 24.22.1 or later ([18022b4](https://github.com/William-De71/gladys-infoclimat/commit/18022b48781e35db67e0e34825c55a2af7904056))
+
 ## [0.1.0] - 2026-10-20
 
 ### Added
@@ -16,4 +22,5 @@ each release from the Conventional Commits: do not edit it by hand.
 - **widgets:** the latest reading of a station, a measure over the last 24 hours with its lowest and highest values, and the followed stations side by side, each crediting Infoclimat and the license of the station
 - **i18n:** English, French, German and Spanish for the manifest, the runtime texts, the documentation and the README
 
+[0.1.1]: https://github.com/William-De71/gladys-infoclimat/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/William-De71/gladys-infoclimat/releases/tag/v0.1.0

@@ -8,8 +8,8 @@
     "de": "Infoclimat-Wetterstationen (StatIC): Temperatur, Wind, Regen nahe deinen Häusern.",
     "es": "Estaciones meteorológicas Infoclimat (StatIC): temperatura, viento, lluvia cerca."
   },
-  "version": "0.1.0",
-  "docker_image": "ghcr.io/william-de71/gladys-infoclimat:0.1.0",
+  "version": "0.1.1",
+  "docker_image": "ghcr.io/william-de71/gladys-infoclimat:0.1.1",
   "gladys_version": ">=5.2.0",
   "categories": ["environment"],
   "cover_image": "https://raw.githubusercontent.com/William-De71/gladys-infoclimat/main/cover.jpg",
