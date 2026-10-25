@@ -5,7 +5,7 @@
 [![Licence : Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue.svg)](LICENSE)
 [![Dernière version](https://img.shields.io/github/v/release/William-De71/gladys-infoclimat?sort=semver)](https://github.com/William-De71/gladys-infoclimat/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/William-De71/gladys-infoclimat/release.yml?branch=main&label=CI)](https://github.com/William-De71/gladys-infoclimat/actions/workflows/release.yml)
-[![Gladys](https://img.shields.io/badge/Gladys-%E2%89%A5%205.2.0-2f6fb5)](https://gladysassistant.com)
+[![Gladys](https://img.shields.io/badge/Gladys-%E2%89%A5%205.3.0-2f6fb5)](https://gladysassistant.com)
 
 ![Infoclimat pour Gladys Assistant](cover.jpg)
 
@@ -97,7 +97,7 @@ Exemples :
 
 ## Prérequis
 
-- Gladys Assistant **5.2.0** ou plus récent (sélecteur de maison, widgets et scènes des intégrations) : les instances plus anciennes ne peuvent pas installer l’intégration.
+- Gladys Assistant **5.3.0** ou plus récent (mots-clés et pays du catalogue de Gladys 5.3, sélecteur de maison, widgets et scènes des intégrations) : les instances plus anciennes ne peuvent pas installer l’intégration.
 - Une **clé open data Infoclimat** gratuite, demandée sur [infoclimat.fr/opendata](https://www.infoclimat.fr/opendata/).
 - La position de votre maison dans Gladys, ou l’identifiant d’une station.
 

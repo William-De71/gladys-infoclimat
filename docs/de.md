@@ -14,7 +14,7 @@ Transport: Cloud. Alle 10 Minuten fragt die Integration Infoclimat mit deinem Sc
 
 ## Voraussetzungen
 
-- Gladys Assistant **5.2.0** oder neuer (Hausauswahl, Widgets und Szenen von Integrationen).
+- Gladys Assistant **5.3.0** oder neuer (Hausauswahl, Widgets und Szenen von Integrationen).
 - Ein kostenloser **Infoclimat-Open-Data-Schlüssel**: Beantrage ihn auf [der Open-Data-Seite von Infoclimat](https://www.infoclimat.fr/opendata/).
 - Um die nächste Station eines Hauses zu verfolgen: der Standort des Hauses in Gladys (Einstellungen → Häuser).
 

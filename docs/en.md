@@ -14,7 +14,7 @@ Transport: cloud. Every 10 minutes the integration asks Infoclimat for the readi
 
 ## Prerequisites
 
-- Gladys Assistant **5.2.0** or later (house picker, widgets and scenes of integrations).
+- Gladys Assistant **5.3.0** or later (house picker, widgets and scenes of integrations).
 - A free **Infoclimat open data key**: request it on [the open data page of Infoclimat](https://www.infoclimat.fr/opendata/).
 - To follow the nearest station of a house: the location of the house set in Gladys (Settings → Houses).
 
